@@ -6,6 +6,7 @@
       - git-core
       - osbuild-composer
       - tar
+      - python36 # https://access.redhat.com/solutions/6973651
     state: present
   register: builder_packages
 

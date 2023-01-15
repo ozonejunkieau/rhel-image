@@ -26,3 +26,7 @@ rhel_image_size_kb:
 rhel_image_ostree_ref:
 rhel_image_ostree_parent:
 rhel_image_ostree_url:
+
+# Alternate CDN Integration
+rhel_image_use_alternate_cdn: false
+rhel_image_cdn_baseurl:

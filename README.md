@@ -54,6 +54,15 @@ Finally, build the image on a build host:
 ansible-playbook -i 192.168.122.123, image_builder.yml
 ```
 
+## Usage with Satellite
+The default configuration for image builder is hard coded to point to the main Red Hat CDN. For usage directly against a Satellite server or Capsule, a few modifications are required. These are documented at https://access.redhat.com/solutions/5773421.
+
+The following additional role variables can be used to setup the build host to pull from an alternate CDN location:
+```
+rhel_image_use_alternate_cdn: true
+rhel_image_cdn_baseurl: satellite.example.com/pulp/repos/org_name/env_name/cv_name
+```
+
 ## See Also
 
 See also

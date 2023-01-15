@@ -1,0 +1,47 @@
+---
+- name: Create repositories config path
+  ansible.builtin.file:
+    path: /etc/osbuild-composer/repositories
+    state: directory
+
+- name: Copy all available json repo files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/osbuild-composer/repositories/"
+    owner: "root"
+    mode: 0644
+  with_fileglob:
+    - "/usr/share/osbuild-composer/repositories/*.json"
+
+- name: Replace all cdn references with satellite url
+  ansible.builtin.replace:
+    owner: root
+    group: root
+    mode: 0644
+    path: "{{ item }}"
+    regexp: (cdn.redhat.com)
+    replace: '{{ rhel_image_cdn_baseurl }}'
+  with_fileglob:
+    - "/etc/osbuild-composer/repositories/*.json"
+
+- name: Check RHSM CA path type
+  ansible.builtin.stat:
+    path: /etc/rhsm/ca/redhat-uep.pem
+  register: redhat_ca_stat
+
+- name: Remove original RHSM CA if not a link
+  ansible.builtin.file:
+    path: /etc/rhsm/ca/redhat-uep.pem
+    state: absent
+  when: not redhat_ca_stat.stat.islnk
+
+- name: Replace RHSM CA with Katello CA link
+  ansible.builtin.file:
+    dest: /etc/rhsm/ca/redhat-uep.pem
+    state: link
+    src: /etc/rhsm/ca/katello-server-ca.pem
+    owner: root
+    group: root
+    mode: 0644
+
+

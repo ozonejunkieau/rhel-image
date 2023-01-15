@@ -3,6 +3,10 @@
   include_tasks: builder_setup.yml
   when: rhel_image_do_setup | bool
 
+- name: Alternate CDN setup
+  include_tasks: builder_setup.yml
+  when: rhel_image_use_alternate_cdn | bool
+
 - name: Build image
   include_tasks: build_image.yml
   when: rhel_image_do_build | bool

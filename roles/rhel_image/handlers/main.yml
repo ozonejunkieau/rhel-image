@@ -1,0 +1,9 @@
+---
+- name: Restart osbuild services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - osbuild-worker@.service.d
+    - osbuild-worker@1.service
+    - osbuild-composer.service

@@ -5,6 +5,7 @@ version: "0.4.1"
 readme: README.md
 authors:
   - Marko Myllynen <myllynen@redhat.com>
+  - Tristan Steele <tristan.steele@redhat.com>
 description: >
   Ansible role for building RHEL images with Image Builder.
 license:
